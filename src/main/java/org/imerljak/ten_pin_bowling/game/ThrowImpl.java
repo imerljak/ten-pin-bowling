@@ -1,5 +1,7 @@
 package org.imerljak.ten_pin_bowling.game;
 
+import static org.imerljak.ten_pin_bowling.game.Constants.STRIKE_VALUE;
+
 class ThrowImpl implements Throw {
 
     private final String stringValue;
@@ -31,7 +33,16 @@ class ThrowImpl implements Throw {
     }
 
     @Override
+    public boolean isStrike() {
+        return intValue == STRIKE_VALUE;
+    }
+
+    @Override
     public String toString() {
+        if (intValue == STRIKE_VALUE) {
+            return  "X";
+        }
+
         return stringValue;
     }
 }

@@ -5,7 +5,7 @@ import java.util.*;
 class BowlingGameImpl implements BowlingGame {
 
     final Set<String> players = new HashSet<>();
-    final Map<String, List<Throw>> playerThrows = new HashMap<>();
+    final SortedMap<String, Frames> playerFrames = new TreeMap<>();
 
     @Override
     public void registerPlayer(String name) {
@@ -18,41 +18,26 @@ class BowlingGameImpl implements BowlingGame {
     }
 
     @Override
-    public void registerThrow(String player, String pins) {
+    public void addThrow(String player, String pins) {
         assertPlayerIsInGame(player);
 
-        this.playerThrows.compute(player, (key, value) -> {
+        this.playerFrames.compute(player, (key, value) -> {
             if (value == null) {
-                value = new ArrayList<>();
+                value = new FramesImpl();
             }
-
-            if (value.size() == 10) {
-                throw new IllegalStateException("Should not have more than 10 throws");
-            }
-
-            value.add(new ThrowImpl(pins));
+            value.addThrow(pins);
             return value;
         });
-    }
-
-    @Override
-    public int throwCount(String player) {
-        assertPlayerIsInGame(player);
-
-        final List<Throw> aThrows = playerThrows.get(player);
-        return aThrows == null ? 0 : aThrows.size();
-    }
-
-    @Override
-    public List<Throw> getThrows(String player) {
-        assertPlayerIsInGame(player);
-
-        return playerThrows.get(player);
     }
 
     private void assertPlayerIsInGame(String player) {
         if (!this.players.contains(player)) {
             throw new IllegalArgumentException("Player " + player + " is not participating in this game yet.");
         }
+    }
+
+    @Override
+    public Map<String, Frames> getGameScores() {
+        return playerFrames;
     }
 }

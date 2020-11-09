@@ -26,37 +26,50 @@ class BowlingGameImplTest {
     }
 
     @Test
-    void shouldRegisterPlayerThrow() {
-        manager.registerPlayer("John");
-        manager.registerThrow("John", "10");
-
-        assertEquals(1, manager.throwCount("John"));
-    }
-
-    @Test
-    void shouldReturnPlayerThrows() {
-        manager.registerPlayer("Jeff");
-        manager.registerThrow("Jeff", "5");
-
-        final List<Throw> jeffThrows = manager.getThrows("Jeff");
-
-        assertEquals(1, jeffThrows.size());
-    }
-
-    @Test
-    void shouldThrowOnMoreThanTenThrows() {
+    void shouldNotPlayMoreThanTenFrames() {
         manager.registerPlayer("Jack");
-        manager.registerThrow("Jack", "F");
-        manager.registerThrow("Jack", "F");
-        manager.registerThrow("Jack", "F");
-        manager.registerThrow("Jack", "F");
-        manager.registerThrow("Jack", "F");
-        manager.registerThrow("Jack", "F");
-        manager.registerThrow("Jack", "F");
-        manager.registerThrow("Jack", "F");
-        manager.registerThrow("Jack", "F");
-        manager.registerThrow("Jack", "F");
 
-        assertThrows(IllegalStateException.class, () -> manager.registerThrow("Jack", "F"));
+        // first frame
+        manager.addThrow("Jack", "F");
+        manager.addThrow("Jack", "F");
+
+        // second frame
+        manager.addThrow("Jack", "F");
+        manager.addThrow("Jack", "F");
+
+        // third frame
+        manager.addThrow("Jack", "F");
+        manager.addThrow("Jack", "F");
+
+        // fourth frame
+        manager.addThrow("Jack", "F");
+        manager.addThrow("Jack", "F");
+
+        // fifth frame
+        manager.addThrow("Jack", "F");
+        manager.addThrow("Jack", "F");
+
+        // sixth frame
+        manager.addThrow("Jack", "F");
+        manager.addThrow("Jack", "F");
+
+        // seventh frame
+        manager.addThrow("Jack", "F");
+        manager.addThrow("Jack", "F");
+
+        // eight frame
+        manager.addThrow("Jack", "F");
+        manager.addThrow("Jack", "F");
+
+        // ninth frame
+        manager.addThrow("Jack", "F");
+        manager.addThrow("Jack", "F");
+
+        // tenth frame
+        manager.addThrow("Jack", "F");
+        manager.addThrow("Jack", "F");
+
+        // nope frame
+        assertThrows(IllegalStateException.class, () -> manager.addThrow("Jack", "F"));
     }
 }

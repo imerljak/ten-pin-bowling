@@ -1,6 +1,6 @@
 package org.imerljak.ten_pin_bowling.game;
 
-import java.util.List;
+import java.util.Map;
 
 public interface BowlingGame {
 
@@ -8,10 +8,8 @@ public interface BowlingGame {
 
     boolean hasPlayer(String name);
 
-    void registerThrow(String player, String value);
+    void addThrow(String player, String value);
 
-    int throwCount(String player);
-
-    List<Throw> getThrows(String player);
+    Map<String, Frames> getGameScores();
 
 }
