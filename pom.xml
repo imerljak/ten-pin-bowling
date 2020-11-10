@@ -40,7 +40,7 @@
     </dependencies>
 
     <build>
-
+        <finalName>ten_pin_bowling</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>

@@ -35,7 +35,7 @@ class ThrowTest {
     }
 
     @Test
-    void shouldThrowOnShiberrish() {
+    void shouldThrowOnGibberish() {
         assertThrows(IllegalArgumentException.class, () -> new ThrowImpl("Banana"));
     }
 
