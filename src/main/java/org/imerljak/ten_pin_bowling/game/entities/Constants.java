@@ -1,4 +1,4 @@
-package org.imerljak.ten_pin_bowling.game;
+package org.imerljak.ten_pin_bowling.game.entities;
 
 abstract class Constants {
 

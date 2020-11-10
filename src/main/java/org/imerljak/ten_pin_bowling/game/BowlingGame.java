@@ -10,6 +10,6 @@ public interface BowlingGame {
 
     void addThrow(String player, String value);
 
-    Map<String, Frames> getGameScores();
+    Map<String, FrameManager> getGameScores();
 
 }

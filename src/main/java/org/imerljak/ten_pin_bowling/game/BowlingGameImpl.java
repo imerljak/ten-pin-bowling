@@ -1,11 +1,19 @@
 package org.imerljak.ten_pin_bowling.game;
 
+import org.imerljak.ten_pin_bowling.game.rules.ScoreStrategy;
+
 import java.util.*;
 
 class BowlingGameImpl implements BowlingGame {
 
-    final Set<String> players = new HashSet<>();
-    final SortedMap<String, Frames> playerFrames = new TreeMap<>();
+    private final Set<String> players = new HashSet<>();
+    private final SortedMap<String, FrameManager> playerFrames = new TreeMap<>();
+
+    private final FrameManagerFactory frameManagerFactory;
+
+    BowlingGameImpl(ScoreStrategy rule) {
+        frameManagerFactory = new FrameManagerFactory(rule);
+    }
 
     @Override
     public void registerPlayer(String name) {
@@ -23,7 +31,7 @@ class BowlingGameImpl implements BowlingGame {
 
         this.playerFrames.compute(player, (key, value) -> {
             if (value == null) {
-                value = new FramesImpl();
+                value = frameManagerFactory.make();
             }
             value.addThrow(pins);
             return value;
@@ -37,7 +45,7 @@ class BowlingGameImpl implements BowlingGame {
     }
 
     @Override
-    public Map<String, Frames> getGameScores() {
+    public Map<String, FrameManager> getGameScores() {
         return playerFrames;
     }
 }

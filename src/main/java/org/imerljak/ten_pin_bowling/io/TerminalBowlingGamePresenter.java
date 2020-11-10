@@ -1,8 +1,8 @@
 package org.imerljak.ten_pin_bowling.io;
 
 import org.imerljak.ten_pin_bowling.game.BowlingGame;
-import org.imerljak.ten_pin_bowling.game.Frame;
-import org.imerljak.ten_pin_bowling.game.Frames;
+import org.imerljak.ten_pin_bowling.game.entities.Frame;
+import org.imerljak.ten_pin_bowling.game.FrameManager;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,7 +19,7 @@ public class TerminalBowlingGamePresenter implements BowlingGamePresenter {
 
     @Override
     public void present() {
-        final Map<String, Frames> scores = game.getGameScores();
+        final Map<String, FrameManager> scores = game.getGameScores();
 
 
         printHeader();
@@ -38,13 +38,13 @@ public class TerminalBowlingGamePresenter implements BowlingGamePresenter {
         System.out.println(player);
     }
 
-    private void printPinfallsRow(Frames frames) {
+    private void printPinfallsRow(FrameManager frameManager) {
         System.out.print("Pinfalls\t");
         for (int i = 1; i <= 10; i++) {
             if (i < 10) {
-                printNormalFrame(frames.frame(i));
+                printNormalFrame(frameManager.frame(i));
             } else {
-                printLastFrame(frames.frame(i));
+                printLastFrame(frameManager.frame(i));
             }
         }
         System.out.println();
@@ -74,10 +74,10 @@ public class TerminalBowlingGamePresenter implements BowlingGamePresenter {
         System.out.print("\t");
     }
 
-    private void printScoreRows(Frames frames) {
+    private void printScoreRows(FrameManager frameManager) {
         System.out.print("Score\t\t");
         for (int i = 1; i <= 10; i++) {
-            final Frame frame = frames.frame(i);
+            final Frame frame = frameManager.frame(i);
             final int score = frame.frameScore();
             System.out.print(score + (i < 10 ? "\t\t" : "\n"));
         }

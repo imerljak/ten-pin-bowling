@@ -1,5 +1,9 @@
-package org.imerljak.ten_pin_bowling.game;
+package org.imerljak.ten_pin_bowling.game.entities;
 
+import org.imerljak.ten_pin_bowling.game.FrameSearcher;
+import org.imerljak.ten_pin_bowling.game.rules.ScoreStrategy;
+import org.imerljak.ten_pin_bowling.game.rules.ScoreStrategyFactory;
+import org.imerljak.ten_pin_bowling.game.rules.ScoreStrategyType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -11,6 +15,8 @@ class DefaultFrameTest {
 
     FrameSearcher searcher;
 
+    ScoreStrategyFactory scoreStrategyFactory = new ScoreStrategyFactory();
+
     @BeforeEach
     void prepare() {
         searcher = Mockito.mock(FrameSearcher.class);
@@ -18,8 +24,10 @@ class DefaultFrameTest {
 
     @Test
     void shouldScoreOnlyPinsWhenOpen() {
-        Frame first = new DefaultFrame(searcher, 1);
-        Frame second = new DefaultFrame(searcher, 2);
+        final ScoreStrategy scoreStrategy = scoreStrategyFactory.make(ScoreStrategyType.TRADITIONAL);
+
+        Frame first = new DefaultFrame(searcher, scoreStrategy, 1);
+        Frame second = new DefaultFrame(searcher, scoreStrategy, 2);
 
         when(searcher.frame(1)).thenReturn(first);
         when(searcher.frame(2)).thenReturn(second);
@@ -34,8 +42,9 @@ class DefaultFrameTest {
 
     @Test
     void shouldScoreNextThrowBonusOnSpare() {
-        Frame first = new DefaultFrame(searcher, 1);
-        Frame second = new DefaultFrame(searcher, 2);
+        final ScoreStrategy scoreStrategy = scoreStrategyFactory.make(ScoreStrategyType.TRADITIONAL);
+        Frame first = new DefaultFrame(searcher, scoreStrategy, 1);
+        Frame second = new DefaultFrame(searcher, scoreStrategy, 2);
 
         when(searcher.frame(1)).thenReturn(first);
         when(searcher.frame(2)).thenReturn(second);
@@ -52,9 +61,10 @@ class DefaultFrameTest {
 
     @Test
     void shouldScoreNextTwoThrowsBonusOnStrike() {
-        Frame first = new DefaultFrame(searcher, 1);
-        Frame second = new DefaultFrame(searcher, 2);
-        Frame third = new DefaultFrame(searcher, 3);
+        final ScoreStrategy scoreStrategy = scoreStrategyFactory.make(ScoreStrategyType.TRADITIONAL);
+        Frame first = new DefaultFrame(searcher, scoreStrategy, 1);
+        Frame second = new DefaultFrame(searcher, scoreStrategy, 2);
+        Frame third = new DefaultFrame(searcher, scoreStrategy, 3);
 
         when(searcher.frame(1)).thenReturn(first);
         when(searcher.frame(2)).thenReturn(second);

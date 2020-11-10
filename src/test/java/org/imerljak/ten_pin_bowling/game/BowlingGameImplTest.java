@@ -3,73 +3,73 @@ package org.imerljak.ten_pin_bowling.game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.imerljak.ten_pin_bowling.game.rules.ScoreStrategyType.TRADITIONAL;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BowlingGameImplTest {
 
-    BowlingGame manager;
+    BowlingGame game;
 
     @BeforeEach
     void beforeEach() {
-        manager = new BowlingGameImpl();
+        game = BowlingGameFactory.makeGame(TRADITIONAL);
     }
 
     @Test
     void shouldRegisterPlayer() {
-        manager.registerPlayer("John");
-        manager.registerPlayer("Jeff");
+        game.registerPlayer("John");
+        game.registerPlayer("Jeff");
 
-        assertTrue(manager.hasPlayer("John"));
-        assertTrue(manager.hasPlayer("Jeff"));
+        assertTrue(game.hasPlayer("John"));
+        assertTrue(game.hasPlayer("Jeff"));
     }
 
     @Test
     void shouldNotPlayMoreThanTenFrames() {
-        manager.registerPlayer("Jack");
+        game.registerPlayer("Jack");
 
         // first frame
-        manager.addThrow("Jack", "F");
-        manager.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
 
         // second frame
-        manager.addThrow("Jack", "F");
-        manager.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
 
         // third frame
-        manager.addThrow("Jack", "F");
-        manager.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
 
         // fourth frame
-        manager.addThrow("Jack", "F");
-        manager.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
 
         // fifth frame
-        manager.addThrow("Jack", "F");
-        manager.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
 
         // sixth frame
-        manager.addThrow("Jack", "F");
-        manager.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
 
         // seventh frame
-        manager.addThrow("Jack", "F");
-        manager.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
 
         // eight frame
-        manager.addThrow("Jack", "F");
-        manager.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
 
         // ninth frame
-        manager.addThrow("Jack", "F");
-        manager.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
 
         // tenth frame
-        manager.addThrow("Jack", "F");
-        manager.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
+        game.addThrow("Jack", "F");
 
         // nope frame
-        assertThrows(IllegalStateException.class, () -> manager.addThrow("Jack", "F"));
+        assertThrows(IllegalStateException.class, () -> game.addThrow("Jack", "F"));
     }
 }

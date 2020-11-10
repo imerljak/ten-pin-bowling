@@ -1,6 +1,7 @@
-package org.imerljak.ten_pin_bowling.game;
+package org.imerljak.ten_pin_bowling.game.entities;
 
-import static org.imerljak.ten_pin_bowling.game.Constants.STRIKE_VALUE;
+
+import static org.imerljak.ten_pin_bowling.game.entities.Constants.STRIKE_VALUE;
 
 class ThrowImpl implements Throw {
 

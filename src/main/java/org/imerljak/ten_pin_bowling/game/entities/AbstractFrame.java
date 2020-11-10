@@ -1,9 +1,11 @@
-package org.imerljak.ten_pin_bowling.game;
+package org.imerljak.ten_pin_bowling.game.entities;
+
+import org.imerljak.ten_pin_bowling.game.rules.FrameScoreCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.imerljak.ten_pin_bowling.game.Constants.STRIKE_VALUE;
+import static org.imerljak.ten_pin_bowling.game.entities.Constants.STRIKE_VALUE;
 
 abstract class AbstractFrame implements Frame {
 
@@ -12,11 +14,21 @@ abstract class AbstractFrame implements Frame {
     private final int maxThrowScore;
     private final int maxThrowCount;
 
-    protected AbstractFrame(int maxThrowScore, int maxThrowCount) {
+    private final int frameNumber;
+
+    private final FrameScoreCalculator scoreCalculator;
+
+    protected AbstractFrame(int maxThrowScore, int maxThrowCount, int frameNumber, FrameScoreCalculator scoreCalculator) {
         this.maxThrowScore = maxThrowScore;
         this.maxThrowCount = maxThrowCount;
+        this.frameNumber = frameNumber;
+        this.scoreCalculator = scoreCalculator;
     }
 
+    @Override
+    public int frameNumber() {
+        return frameNumber;
+    }
 
     @Override
     public void addThrow(String atThrow) {
@@ -73,7 +85,8 @@ abstract class AbstractFrame implements Frame {
         return 0;
     }
 
-    protected int throwScore() {
+    @Override
+    public int throwScore() {
         return throwList.stream()
                 .mapToInt(Throw::getValue)
                 .sum();
@@ -87,5 +100,10 @@ abstract class AbstractFrame implements Frame {
     @Override
     public boolean hasSpare() {
         return throwList.size() > 1 && throwScore() == STRIKE_VALUE;
+    }
+
+    @Override
+    public int frameScore() {
+        return scoreCalculator.calculate(this);
     }
 }
